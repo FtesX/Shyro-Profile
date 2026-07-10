@@ -715,3 +715,7 @@ text-shadow:
     height:22px;
     filter: invert(1);
 }
+
+.buttons i {
+    font-size:22px;
+}
