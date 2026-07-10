@@ -12,7 +12,9 @@
 <head>
      
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
+
+    <link rel="manifest" href="manifest.json">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -31,6 +33,15 @@
 
 
 <body>
+
+
+<div class="loader">
+
+<h2>
+Loading Shyro...
+</h2>
+
+</div>
 
 <div class="cursor"></div>
 
@@ -140,11 +151,21 @@
 
     <!-- Music -->
 
-    <button id="music">
+    <div class="music-box">
 
-        🎵 Play Music
+<p>
+🎵 Now Playing
+</p>
 
-    </button>
+<h3>
+Starboy - The Weeknd
+</h3>
+
+<button id="music">
+▶ Play
+</button>
+
+</div>
 
 
 
@@ -169,7 +190,7 @@
 
 
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 
 
 </body>

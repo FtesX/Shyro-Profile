@@ -745,3 +745,77 @@ button:active{
     transform:scale(0.95);
 
 }
+
+/* Mobile touch effect */
+
+.buttons a:active,
+button:active{
+
+    transform:scale(0.92);
+
+}
+
+.music-box{
+
+margin-top:25px;
+
+padding:20px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.1);
+
+border:
+1px solid rgba(255,255,255,.2);
+
+}
+
+
+.music-box h3{
+
+margin:10px;
+
+font-size:14px;
+
+}
+
+.loader{
+
+position:fixed;
+
+inset:0;
+
+background:#050510;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+z-index:99999;
+
+animation:
+hideLoader 2s forwards;
+
+}
+
+
+@keyframes hideLoader{
+
+0%,80%{
+
+opacity:1;
+
+}
+
+100%{
+
+opacity:0;
+
+visibility:hidden;
+
+}
+
+}

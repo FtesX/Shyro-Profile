@@ -1,0 +1,14 @@
+{
+"name":"Shyro Profile",
+"short_name":"Shyro",
+"start_url":"/",
+"display":"standalone",
+"background_color":"#050510",
+"theme_color":"#00d9ff",
+"icons":[
+{
+"src":"https://avatars.fastly.steamstatic.com/2c48197aadb2c5f6ae085bda463098ccac9a99cb_full.jpg",
+"sizes":"512x512"
+}
+]
+}

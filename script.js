@@ -1,34 +1,95 @@
 // ==========================
-// 3D CARD EFFECT
+// FIREBASE SETUP
+// ==========================
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { 
+getFirestore,
+doc,
+getDoc,
+setDoc,
+updateDoc,
+increment
+} 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA29_4UB7n8KxVisZ0o4PPQY4EH6E0gWE8",
+
+authDomain: "shyro-profile.firebaseapp.com",
+
+projectId: "shyro-profile",
+
+storageBucket: "shyro-profile.firebasestorage.app",
+
+messagingSenderId: "810707781934",
+
+appId: "1:810707781934:web:5578352d41adda6c4a52bf"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+
+// ==========================
+// CARD 3D EFFECT (PC)
 // ==========================
 
 const card = document.querySelector(".card");
 
 
-document.addEventListener("mousemove", (e)=>{
-
-    let x = (window.innerWidth / 2 - e.clientX) / 30;
-    let y = (window.innerHeight / 2 - e.clientY) / 30;
+const isDesktop =
+window.matchMedia("(hover: hover) && (pointer: fine)").matches;
 
 
-    card.style.transform =
-    `rotateY(${x}deg) rotateX(${y}deg)`;
+if(isDesktop){
+
+document.addEventListener("mousemove",(e)=>{
+
+
+let x =
+(window.innerWidth / 2 - e.clientX) / 30;
+
+
+let y =
+(window.innerHeight / 2 - e.clientY) / 30;
+
+
+card.style.transform =
+`
+rotateY(${x}deg)
+rotateX(${y}deg)
+`;
 
 });
 
 
-document.addEventListener("mouseleave", ()=>{
+document.addEventListener("mouseleave",()=>{
 
-    card.style.transform =
-    "rotateY(0deg) rotateX(0deg)";
+
+card.style.transform =
+"rotateY(0deg) rotateX(0deg)";
+
 
 });
+
+
+}
 
 
 
 // ==========================
 // MUSIC PLAYER
 // ==========================
+
 
 const musicButton =
 document.getElementById("music");
@@ -37,199 +98,263 @@ document.getElementById("music");
 let playing = false;
 
 
-// энд өөрийн music link хийнэ
-const audio = new Audio(
-"assets/music.mp3"
-);
+const audio =
+new Audio("assets/music.mp3");
+
+
+
+if(musicButton){
 
 
 musicButton.onclick = ()=>{
 
 
-    if(!playing){
-
-        audio.play();
-
-        musicButton.innerHTML =
-        "⏸ Pause Music";
-
-        playing = true;
-
-    }
-
-    else{
-
-        audio.pause();
-
-        musicButton.innerHTML =
-        "🎵 Play Music";
-
-        playing=false;
-
-    }
-
-};
+if(!playing){
 
 
-
-// ==========================
-// TEMP VIEW COUNTER
-// ==========================
+audio.play();
 
 
-let views =
-localStorage.getItem("views");
+musicButton.innerHTML =
+"⏸ Pause Music";
 
 
-if(!views){
+playing = true;
 
-    views = 1;
 
 }
 
 else{
 
-    views++;
+
+audio.pause();
+
+
+musicButton.innerHTML =
+"🎵 Play Music";
+
+
+playing = false;
+
 
 }
 
 
-localStorage.setItem(
-"views",
-views
+};
+
+
+}
+
+
+
+// ==========================
+// FIREBASE VIEW COUNTER
+// ==========================
+
+
+const viewRef =
+doc(db,"website","views");
+
+
+
+async function addView(){
+
+
+try{
+
+
+const snap =
+await getDoc(viewRef);
+
+
+
+if(snap.exists()){
+
+
+await updateDoc(
+viewRef,
+{
+count:
+increment(1)
+}
 );
 
 
-document.getElementById("views")
-.innerHTML = views;
+}
 
-// CUSTOM CURSOR
-
-const cursor = document.querySelector(".cursor");
+else{
 
 
-document.addEventListener("mousemove",(e)=>{
+await setDoc(
+viewRef,
+{
+count:1
+}
+);
 
 
-    cursor.style.left =
-    e.clientX + "px";
+}
 
 
-    cursor.style.top =
-    e.clientY + "px";
+
+const updated =
+await getDoc(viewRef);
 
 
-});
+
+document.getElementById("views").innerHTML =
+updated.data().count;
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"View error:",
+error
+);
+
+
+}
+
+
+
+}
+
+
+
+addView();
+
+
 
 // ==========================
-// CURSOR TRAIL
+// DESKTOP CUSTOM CURSOR
 // ==========================
+
+
+if(isDesktop){
+
+
+const cursor =
+document.querySelector(".cursor");
 
 
 const trail =
 document.querySelector(".cursor-trail");
 
 
-document.addEventListener(
-"mousemove",
-(e)=>{
-
-
-    setTimeout(()=>{
-
-
-        trail.style.left =
-        e.clientX + "px";
-
-
-        trail.style.top =
-        e.clientY + "px";
-
-
-    },80);
-
-
-});
-
-// ==========================
-// NEON CURSOR TRAIL PARTICLES
-// ==========================
-
 
 document.addEventListener(
 "mousemove",
 (e)=>{
 
 
-    const particle =
-    document.createElement("div");
+cursor.style.left =
+e.clientX + "px";
 
 
-    particle.className =
-    "trail-particle";
-
-
-    document.body.appendChild(
-        particle
-    );
-
-
-    particle.style.left =
-    e.clientX + "px";
-
-
-    particle.style.top =
-    e.clientY + "px";
+cursor.style.top =
+e.clientY + "px";
 
 
 
-    setTimeout(()=>{
+setTimeout(()=>{
 
-        particle.remove();
 
-    },800);
+trail.style.left =
+e.clientX + "px";
+
+
+trail.style.top =
+e.clientY + "px";
+
+
+},80);
+
+
+
+// particle
+
+
+const particle =
+document.createElement("div");
+
+
+particle.className =
+"trail-particle";
+
+
+document.body.appendChild(
+particle
+);
+
+
+
+particle.style.left =
+e.clientX + "px";
+
+
+particle.style.top =
+e.clientY + "px";
+
+
+
+setTimeout(()=>{
+
+
+particle.remove();
+
+
+},800);
+
 
 
 });
 
-const isDesktop =
-window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-if (isDesktop) {
+}
 
-    // CUSTOM CURSOR
-    const cursor = document.querySelector(".cursor");
 
-    document.addEventListener("mousemove", (e) => {
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top = e.clientY + "px";
-    });
 
-    // CURSOR TRAIL
-    const trail = document.querySelector(".cursor-trail");
+// ==========================
+// MOBILE GYROSCOPE EFFECT
+// ==========================
 
-    document.addEventListener("mousemove", (e) => {
-        setTimeout(() => {
-            trail.style.left = e.clientX + "px";
-            trail.style.top = e.clientY + "px";
-        }, 80);
-    });
 
-    // PARTICLES
-    document.addEventListener("mousemove", (e) => {
+const isMobile =
+window.matchMedia("(pointer: coarse)").matches;
 
-        const particle = document.createElement("div");
-        particle.className = "trail-particle";
 
-        document.body.appendChild(particle);
 
-        particle.style.left = e.clientX + "px";
-        particle.style.top = e.clientY + "px";
+if(isMobile){
 
-        setTimeout(() => {
-            particle.remove();
-        }, 800);
 
-    });
+window.addEventListener(
+"deviceorientation",
+(e)=>{
+
+
+let rotateY =
+e.gamma / 5;
+
+
+let rotateX =
+e.beta / 10;
+
+
+
+card.style.transform =
+`
+rotateY(${rotateY}deg)
+rotateX(${rotateX}deg)
+`;
+
+
+
+});
+
 
 }
