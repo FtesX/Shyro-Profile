@@ -191,3 +191,45 @@ document.addEventListener(
 
 
 });
+
+const isDesktop =
+window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+if (isDesktop) {
+
+    // CUSTOM CURSOR
+    const cursor = document.querySelector(".cursor");
+
+    document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+    });
+
+    // CURSOR TRAIL
+    const trail = document.querySelector(".cursor-trail");
+
+    document.addEventListener("mousemove", (e) => {
+        setTimeout(() => {
+            trail.style.left = e.clientX + "px";
+            trail.style.top = e.clientY + "px";
+        }, 80);
+    });
+
+    // PARTICLES
+    document.addEventListener("mousemove", (e) => {
+
+        const particle = document.createElement("div");
+        particle.className = "trail-particle";
+
+        document.body.appendChild(particle);
+
+        particle.style.left = e.clientX + "px";
+        particle.style.top = e.clientY + "px";
+
+        setTimeout(() => {
+            particle.remove();
+        }, 800);
+
+    });
+
+}
