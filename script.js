@@ -358,3 +358,13 @@ rotateX(${rotateX}deg)
 
 
 }
+
+window.addEventListener("deviceorientation", (event)=>{
+
+    let x = event.gamma / 10;
+    let y = event.beta / 10;
+
+    card.style.transform =
+    `rotateY(${x}deg) rotateX(${y}deg)`;
+
+});
