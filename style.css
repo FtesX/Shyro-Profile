@@ -719,3 +719,29 @@ text-shadow:
 .buttons i {
     font-size:22px;
 }
+
+@media(max-width:500px){
+
+    .card{
+        width:92%;
+        padding:30px 20px;
+        border-radius:30px;
+    }
+
+    h1{
+        font-size:34px;
+    }
+
+    .avatar{
+        width:130px;
+        height:130px;
+    }
+
+}
+
+.buttons a:active,
+button:active{
+
+    transform:scale(0.95);
+
+}
