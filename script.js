@@ -2,18 +2,19 @@
 // FIREBASE SETUP
 // ==========================
 
-import { initializeApp } 
+import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import { 
+import {
 getFirestore,
 doc,
 getDoc,
 setDoc,
 updateDoc,
 increment
-} 
+}
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 
 const firebaseConfig = {
@@ -33,6 +34,7 @@ appId: "1:810707781934:web:5578352d41adda6c4a52bf"
 };
 
 
+
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
@@ -40,39 +42,66 @@ const db = getFirestore(app);
 
 
 // ==========================
-// CARD 3D EFFECT (PC)
+// VARIABLES
 // ==========================
 
-const card = document.querySelector(".card");
+
+const card =
+document.querySelector(".card");
 
 
 const isDesktop =
-window.matchMedia("(hover: hover) && (pointer: fine)").matches;
+window.matchMedia(
+"(hover: hover) and (pointer: fine)"
+).matches;
+
+
+
+const isMobile =
+window.matchMedia(
+"(pointer: coarse)"
+).matches;
+
+
+
+// ==========================
+// PC 3D MOUSE CARD EFFECT
+// ==========================
 
 
 if(isDesktop){
 
-document.addEventListener("mousemove",(e)=>{
+
+document.addEventListener(
+"mousemove",
+(e)=>{
 
 
-let x =
+let rotateY =
 (window.innerWidth / 2 - e.clientX) / 30;
 
 
-let y =
+let rotateX =
 (window.innerHeight / 2 - e.clientY) / 30;
 
 
+
 card.style.transform =
+
 `
-rotateY(${x}deg)
-rotateX(${y}deg)
+rotateY(${rotateY}deg)
+rotateX(${rotateX}deg)
 `;
+
+
 
 });
 
 
-document.addEventListener("mouseleave",()=>{
+
+document.addEventListener(
+"mouseleave",
+()=>{
 
 
 card.style.transform =
@@ -83,6 +112,7 @@ card.style.transform =
 
 
 }
+
 
 
 
@@ -153,7 +183,11 @@ playing = false;
 
 
 const viewRef =
-doc(db,"website","views");
+doc(
+db,
+"website",
+"views"
+);
 
 
 
@@ -174,8 +208,10 @@ if(snap.exists()){
 await updateDoc(
 viewRef,
 {
+
 count:
 increment(1)
+
 }
 );
 
@@ -188,7 +224,9 @@ else{
 await setDoc(
 viewRef,
 {
+
 count:1
+
 }
 );
 
@@ -202,8 +240,19 @@ await getDoc(viewRef);
 
 
 
-document.getElementById("views").innerHTML =
+const viewElement =
+document.getElementById("views");
+
+
+
+if(viewElement){
+
+
+viewElement.innerHTML =
 updated.data().count;
+
+
+}
 
 
 
@@ -213,7 +262,7 @@ catch(error){
 
 
 console.log(
-"View error:",
+"Firebase View Error:",
 error
 );
 
@@ -221,12 +270,12 @@ error
 }
 
 
-
 }
 
 
 
 addView();
+
 
 
 
@@ -252,6 +301,9 @@ document.addEventListener(
 (e)=>{
 
 
+if(cursor){
+
+
 cursor.style.left =
 e.clientX + "px";
 
@@ -259,6 +311,13 @@ e.clientX + "px";
 cursor.style.top =
 e.clientY + "px";
 
+
+}
+
+
+
+
+if(trail){
 
 
 setTimeout(()=>{
@@ -275,8 +334,9 @@ e.clientY + "px";
 },80);
 
 
+}
 
-// particle
+
 
 
 const particle =
@@ -285,6 +345,7 @@ document.createElement("div");
 
 particle.className =
 "trail-particle";
+
 
 
 document.body.appendChild(
@@ -319,14 +380,11 @@ particle.remove();
 
 
 
+
+
 // ==========================
-// MOBILE GYROSCOPE EFFECT
+// MOBILE GYROSCOPE
 // ==========================
-
-
-const isMobile =
-window.matchMedia("(pointer: coarse)").matches;
-
 
 
 if(isMobile){
@@ -347,6 +405,7 @@ e.beta / 10;
 
 
 card.style.transform =
+
 `
 rotateY(${rotateY}deg)
 rotateX(${rotateX}deg)
@@ -359,12 +418,36 @@ rotateX(${rotateX}deg)
 
 }
 
-window.addEventListener("deviceorientation", (event)=>{
 
-    let x = event.gamma / 10;
-    let y = event.beta / 10;
 
-    card.style.transform =
-    `rotateY(${x}deg) rotateX(${y}deg)`;
+
+// ==========================
+// LOADER REMOVE
+// ==========================
+
+
+window.addEventListener(
+"load",
+()=>{
+
+
+const loader =
+document.querySelector(".loader");
+
+
+if(loader){
+
+
+setTimeout(()=>{
+
+
+loader.remove();
+
+
+},2000);
+
+
+}
+
 
 });
