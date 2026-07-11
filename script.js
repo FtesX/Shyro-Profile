@@ -451,3 +451,19 @@ loader.remove();
 
 
 });
+
+const line =
+document.querySelector(".signature-line");
+
+function replaySignature(){
+
+line.style.animation="none";
+
+line.offsetHeight;
+
+line.style.animation=
+"drawSignature 6s linear forwards, glow 2s infinite alternate";
+
+}
+
+setInterval(replaySignature,9000);

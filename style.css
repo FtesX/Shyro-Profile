@@ -913,3 +913,117 @@ display:none!important;
 
 
 }
+
+.signature-bg{
+
+position:fixed;
+
+inset:0;
+
+overflow:hidden;
+
+pointer-events:none;
+
+z-index:-1;
+
+}
+
+.signature-svg{
+
+width:160%;
+
+height:160%;
+
+position:absolute;
+
+top:-20%;
+
+left:-20%;
+
+opacity:.12;
+
+transform:rotate(-8deg);
+
+}
+
+.signature-line{
+
+fill:none;
+
+stroke:#00eaff;
+
+stroke-width:3;
+
+stroke-linecap:round;
+
+stroke-linejoin:round;
+
+stroke-dasharray:2500;
+
+stroke-dashoffset:2500;
+
+animation:
+
+drawSignature 6s linear forwards,
+
+glow 2s infinite alternate;
+
+filter:
+
+drop-shadow(0 0 12px #00eaff)
+
+drop-shadow(0 0 35px #9d00ff);
+
+}
+
+.signature-text{
+
+fill:#ffffff;
+
+font-size:42px;
+
+font-family:cursive;
+
+letter-spacing:8px;
+
+opacity:.9;
+
+}
+
+@keyframes drawSignature{
+
+0%{
+
+stroke-dashoffset:2500;
+
+}
+
+100%{
+
+stroke-dashoffset:0;
+
+}
+
+}
+
+@keyframes glow{
+
+from{
+
+filter:
+
+drop-shadow(0 0 10px #00eaff);
+
+}
+
+to{
+
+filter:
+
+drop-shadow(0 0 30px #00eaff)
+
+drop-shadow(0 0 60px #9d00ff);
+
+}
+
+}
