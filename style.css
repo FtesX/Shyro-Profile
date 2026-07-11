@@ -915,363 +915,151 @@ display:none!important;
 }
 
 /* ==========================
-   SHYRO SIGNATURE EFFECT
+   SHYRO SIGNATURE
 ========================== */
-
 
 .signature-container{
 
 position:fixed;
 
-width:700px;
+left:50%;
+top:50%;
 
-height:250px;
+transform:translate(-50%,-50%);
 
-z-index:-1;
+width:430px;
+height:170px;
+
+display:flex;
+justify-content:center;
+align-items:center;
 
 pointer-events:none;
 
-opacity:.8;
+z-index:-1;
 
-
-animation:
-
-signatureMove 12s infinite;
+opacity:.16;
 
 }
-
-
 
 .signature-svg{
 
 width:100%;
-
 height:100%;
-
+overflow:visible;
 
 filter:
 
-drop-shadow(0 0 15px #00eaff)
-
-drop-shadow(0 0 40px #9d00ff);
-
+drop-shadow(0 0 15px rgba(0,255,255,.5))
+drop-shadow(0 0 40px rgba(157,0,255,.35));
 
 }
-
-
 
 .signature-path{
 
-
 fill:none;
 
+stroke:url(#gradient);
 
-stroke:
-
-url(#gradient);
-
-
-stroke:#00eaff;
-
-
-stroke-width:6;
-
+stroke-width:5;
 
 stroke-linecap:round;
 
-
 stroke-linejoin:round;
 
-
-
 stroke-dasharray:1200;
-
-
 stroke-dashoffset:1200;
-
-
 
 animation:
 
-
-drawSignature 5s ease forwards,
-
-signatureGlow 2s infinite alternate;
-
-
+drawSignature 5s linear forwards,
+signatureGlow 2s ease-in-out infinite alternate;
 
 }
-
-
-
 
 @keyframes drawSignature{
 
-
-0%{
-
+from{
 
 stroke-dashoffset:1200;
 
-
 }
 
-
-100%{
-
+to{
 
 stroke-dashoffset:0;
 
-
 }
 
-
 }
-
-
-
 
 @keyframes signatureGlow{
 
-
-from{
-
-
-filter:
-
-drop-shadow(
-0 0 10px #00eaff
-);
-
-
-}
-
-
-
-to{
-
-
-filter:
-
-drop-shadow(
-0 0 35px #9d00ff
-)
-
-drop-shadow(
-0 0 70px #00eaff
-);
-
-
-
-}
-
-
-}
-
-
-
-
-/* random movement */
-
-
-@keyframes signatureMove{
-
-
 0%{
 
+filter:
 
-left:-300px;
-
-top:20%;
-
-opacity:0;
-
+drop-shadow(0 0 10px #00ffff);
 
 }
-
-
-
-10%{
-
-
-opacity:.8;
-
-
-}
-
-
-
-30%{
-
-
-left:55%;
-
-top:25%;
-
-
-}
-
-
-
-50%{
-
-
-left:20%;
-
-top:60%;
-
-
-}
-
-
-
-70%{
-
-
-left:70%;
-
-top:45%;
-
-
-}
-
-
-
-90%{
-
-
-opacity:.7;
-
-
-}
-
-
 
 100%{
 
+filter:
 
-left:-300px;
+drop-shadow(0 0 25px #00ffff)
 
-top:30%;
-
-opacity:0;
-
+drop-shadow(0 0 55px #9d00ff);
 
 }
 
-
 }
 
-
-
-
-
-
-/* SMOKE EFFECT */
-
+/* ==========================
+   SMOKE
+========================== */
 
 .smoke{
 
-
 position:absolute;
 
-
-inset:-100px;
-
+width:500px;
+height:250px;
 
 background:
 
+radial-gradient(circle,
+rgba(0,255,255,.12),
+transparent 60%),
 
-radial-gradient(
-circle,
-rgba(0,234,255,.25),
-transparent 60%
-),
+radial-gradient(circle,
+rgba(157,0,255,.10),
+transparent 70%);
 
+filter:blur(80px);
 
-radial-gradient(
-circle,
-rgba(157,0,255,.2),
-transparent 60%
-);
+opacity:.45;
 
-
-
-filter:blur(50px);
-
-
-animation:
-
-smokeMove 5s infinite alternate;
-
-
+animation:smokeMove 8s ease-in-out infinite alternate;
 
 }
-
-
 
 @keyframes smokeMove{
 
-
 from{
 
-
 transform:
-
-scale(1)
-translate(0,0);
-
-
+translate(-20px,-10px)
+scale(.95);
 
 }
-
-
 
 to{
 
-
 transform:
-
-scale(1.5)
-translate(50px,-30px);
-
-
+translate(20px,10px)
+scale(1.08);
 
 }
-
-
-}
-
-
-
-
-
-
-/* 3D DEPTH */
-
-
-.signature-container{
-
-
-transform-style:preserve-3d;
-
-
-perspective:1000px;
-
-
-}
-
-
-
-
-.signature-svg{
-
-
-transform:
-
-rotateX(25deg)
-
-rotateY(-15deg);
-
 
 }

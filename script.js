@@ -452,18 +452,25 @@ loader.remove();
 
 });
 
-const line =
-document.querySelector(".signature-line");
 
-function replaySignature(){
+const line = document.querySelector(".signature-path");
 
-line.style.animation="none";
+if (line) {
 
-line.offsetHeight;
+    function replaySignature() {
 
-line.style.animation=
-"drawSignature 6s linear forwards, glow 2s infinite alternate";
+        line.style.animation = "none";
 
+        // Animation-ийг дахин эхлүүлэх
+        void line.offsetWidth;
+
+        line.style.animation =
+            "drawSignature 5s linear forwards, signatureGlow 2s ease-in-out infinite alternate";
+    }
+
+    // Эхний удаа
+    replaySignature();
+
+    // 8 секунд тутам дахин бичигдэнэ
+    setInterval(replaySignature, 8000);
 }
-
-setInterval(replaySignature,9000);
