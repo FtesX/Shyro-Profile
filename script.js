@@ -451,26 +451,3 @@ loader.remove();
 
 
 });
-
-
-const line = document.querySelector(".signature-path");
-
-if (line) {
-
-    function replaySignature() {
-
-        line.style.animation = "none";
-
-        // Animation-ийг дахин эхлүүлэх
-        void line.offsetWidth;
-
-        line.style.animation =
-            "drawSignature 5s linear forwards, signatureGlow 2s ease-in-out infinite alternate";
-    }
-
-    // Эхний удаа
-    replaySignature();
-
-    // 8 секунд тутам дахин бичигдэнэ
-    setInterval(replaySignature, 8000);
-}
