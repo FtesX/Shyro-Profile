@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
   <title>Shyro.</title>
 
   <!-- SEO / Social preview (Discord, Twitter гэх мэт дээр линк хуваалцахад зураг+тайлбар харагдана) -->
-  <meta name="description" content="Shyro — LANN Gaming Community-ийн admin. Steam, Discord, Faceit профайлууд нэг дор.">
+  <meta name="description" content="Shyro — LANN Gaming Community-ийн админ. Steam, Discord, Faceit профайлууд нэг дор.">
   <meta name="theme-color" content="#00d9ff">
   <meta property="og:title" content="Shyro.">
-  <meta property="og:description" content="LANN Gaming Community — Admin profile">
+  <meta property="og:description" content="LANN Gaming Community — Админ профайл">
   <meta property="og:image" content="https://avatars.fastly.steamstatic.com/2c48197aadb2c5f6ae085bda463098ccac9a99cb_full.jpg">
   <meta property="og:type" content="profile">
   <meta name="twitter:card" content="summary">
@@ -33,19 +34,20 @@
 
   <div class="loader">
     <img class="loader-avatar" src="https://avatars.fastly.steamstatic.com/2c48197aadb2c5f6ae085bda463098ccac9a99cb_full.jpg" alt="">
-    <h2>Loading Shyro...</h2>
+    <h2>Ачааллаж байна...</h2>
   </div>
 
   <div class="cursor"></div>
   <div class="cursor-trail"></div>
   <div class="background"></div>
+  <div class="grid-overlay"></div>
 
   <main class="card">
 
-    <!-- Avatar + online status dot -->
+    <!-- Avatar + online статус цэг -->
     <div class="avatar-wrap">
       <img class="avatar" src="https://avatars.fastly.steamstatic.com/2c48197aadb2c5f6ae085bda463098ccac9a99cb_full.jpg" alt="Shyro avatar">
-      <span class="status-dot" id="statusDot" title="Status" data-state="unknown"></span>
+      <span class="status-dot" id="statusDot" title="Статус" data-state="unknown"></span>
     </div>
 
     <h1>Shyro.</h1>
@@ -61,37 +63,37 @@
     </div>
 
     <p class="community">🎮 LANN Gaming Community</p>
-    <p class="since">Discord Since: 2022-08-22</p>
+    <p class="since">Discord-т элссэн: 2022-08-22</p>
 
-    <!-- Social Buttons -->
+    <!-- Social Buttons: Steam / Faceit / Discord -->
     <div class="buttons">
-      <a target="_blank" rel="noopener" href="https://steamcommunity.com/profiles/76561199482962460/">
+      <a class="social-tile" target="_blank" rel="noopener" href="https://steamcommunity.com/profiles/76561199482962460/">
         <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/steam.svg" alt="">
-        Steam
+        <span>Steam</span>
       </a>
 
-      <a target="_blank" rel="noopener" href="https://discord.com/users/1003847406372261951">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/discord.svg" alt="">
-        Discord
-      </a>
-
-      <a target="_blank" rel="noopener" href="https://www.faceit.com/en/players/Fat1s_X">
+      <a class="social-tile" target="_blank" rel="noopener" href="https://www.faceit.com/en/players/Fat1s_X">
         <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/faceit.svg" alt="">
-        Faceit
+        <span>Faceit</span>
+      </a>
+
+      <a class="social-tile" target="_blank" rel="noopener" href="https://discord.com/users/1003847406372261951">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/discord.svg" alt="">
+        <span>Discord</span>
       </a>
     </div>
 
-    <!-- Copy Discord ID -->
+    <!-- Discord ID хуулах -->
     <div class="id-row">
       <span>ID: 1003847406372261951</span>
-      <button type="button" class="copy-btn" data-copy="1003847406372261951" aria-label="Copy Discord ID">
+      <button type="button" class="copy-btn" data-copy="1003847406372261951" aria-label="Discord ID хуулах">
         <i class="fa-regular fa-copy"></i>
       </button>
     </div>
 
-    <!-- Music -->
+    <!-- Хөгжим -->
     <div class="music-box">
-      <p>🎵 Now Playing</p>
+      <p>🎵 Одоо тоглож буй</p>
       <h3>Starboy - The Weeknd</h3>
 
       <div class="visualizer" id="visualizer" aria-hidden="true">
@@ -106,21 +108,16 @@
         <span id="timeTotal">0:00</span>
       </div>
 
-      <button type="button" id="music">▶ Play</button>
+      <button type="button" id="music">▶ Тоглуулах</button>
     </div>
 
-    <!-- Share -->
-    <button type="button" class="share-btn" id="shareBtn" aria-label="Copy profile link">
-      <i class="fa-solid fa-link"></i> Share Profile
+    <!-- Апп болгож суулгах (дэмждэг browser дээр л харагдана) -->
+    <button type="button" class="install-btn" id="installBtn" aria-label="Апп суулгах" hidden>
+      <i class="fa-solid fa-download"></i> Апп суулгах
     </button>
 
-    <!-- Install as app (зөвхөн дэмждэг browser дээр харагдана) -->
-    <button type="button" class="share-btn" id="installBtn" aria-label="Install app" hidden>
-      <i class="fa-solid fa-download"></i> Install App
-    </button>
-
-    <!-- Views -->
-    <p class="views">👀 Views: <span id="views">0</span></p>
+    <!-- Үзсэн тоо -->
+    <p class="views">👀 Үзсэн: <span id="views">0</span></p>
 
   </main>
 

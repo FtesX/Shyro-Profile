@@ -93,7 +93,7 @@ audio.addEventListener("timeupdate", () => {
 
 audio.addEventListener("ended", () => {
   playing = false;
-  if (musicButton) musicButton.innerHTML = "▶ Play";
+  if (musicButton) musicButton.innerHTML = "▶ Тоглуулах";
   if (visualizer) visualizer.classList.remove("playing");
 });
 
@@ -110,12 +110,12 @@ if (musicButton) {
   musicButton.onclick = () => {
     if (!playing) {
       audio.play().catch(() => showToast("Тоглуулж чадсангүй 🙁"));
-      musicButton.innerHTML = "⏸ Pause";
+      musicButton.innerHTML = "⏸ Зогсоох";
       visualizer?.classList.add("playing");
       playing = true;
     } else {
       audio.pause();
-      musicButton.innerHTML = "▶ Play";
+      musicButton.innerHTML = "▶ Тоглуулах";
       visualizer?.classList.remove("playing");
       playing = false;
     }
@@ -123,7 +123,7 @@ if (musicButton) {
 }
 
 // ==========================
-// COPY BUTTONS (Discord ID + Share link)
+// COPY BUTTON (Discord ID)
 // ==========================
 
 document.querySelectorAll(".copy-btn").forEach((btn) => {
@@ -137,18 +137,6 @@ document.querySelectorAll(".copy-btn").forEach((btn) => {
     }
   });
 });
-
-const shareBtn = document.getElementById("shareBtn");
-if (shareBtn) {
-  shareBtn.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      showToast("Линк хуулагдлаа 🔗");
-    } catch {
-      showToast("Хуулж чадсангүй");
-    }
-  });
-}
 
 // ==========================
 // FIREBASE VIEW COUNTER (session-д 1 удаа нэмэгдэнэ)
@@ -298,7 +286,7 @@ if (installBtn) {
 }
 
 window.addEventListener("appinstalled", () => {
-  showToast("Suulgalaa! 📲");
+  showToast("Амжилттай суулгалаа! 📲");
 });
 
 // ==========================
