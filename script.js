@@ -19,7 +19,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Discord user id — Lanyard presence-д ашиглана
+// Discord user id — used for Lanyard presence
 const DISCORD_ID = "1003847406372261951";
 
 // ==========================
@@ -61,65 +61,33 @@ if (isDesktop && !prefersReducedMotion && card) {
 }
 
 // ==========================
-// MUSIC PLAYER (progress bar + visualizer)
+// BACKGROUND MUSIC — autoplays for everyone, no manual pause/resume.
+// Only a live equalizer effect represents it (no track name/time shown).
 // ==========================
 
-const musicButton = document.getElementById("music");
 const audio = new Audio("assets/music.mp3");
-const progressFill = document.getElementById("progressFill");
-const progressBar = document.querySelector(".progress-bar");
-const timeCurrent = document.getElementById("timeCurrent");
-const timeTotal = document.getElementById("timeTotal");
+audio.loop = true;
+audio.volume = 0.6;
 const visualizer = document.getElementById("visualizer");
-let playing = false;
 
-function formatTime(sec) {
-  if (!isFinite(sec)) return "0:00";
-  const m = Math.floor(sec / 60);
-  const s = Math.floor(sec % 60).toString().padStart(2, "0");
-  return `${m}:${s}`;
-}
+audio.addEventListener("play", () => visualizer?.classList.add("playing"));
+audio.addEventListener("pause", () => visualizer?.classList.remove("playing"));
 
-audio.addEventListener("loadedmetadata", () => {
-  if (timeTotal) timeTotal.textContent = formatTime(audio.duration);
-});
-
-audio.addEventListener("timeupdate", () => {
-  if (progressFill && audio.duration) {
-    progressFill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
-  }
-  if (timeCurrent) timeCurrent.textContent = formatTime(audio.currentTime);
-});
-
-audio.addEventListener("ended", () => {
-  playing = false;
-  if (musicButton) musicButton.innerHTML = "▶ Тоглуулах";
-  if (visualizer) visualizer.classList.remove("playing");
-});
-
-if (progressBar) {
-  progressBar.addEventListener("click", (e) => {
-    if (!audio.duration) return;
-    const rect = progressBar.getBoundingClientRect();
-    const ratio = (e.clientX - rect.left) / rect.width;
-    audio.currentTime = ratio * audio.duration;
+function tryAutoplay() {
+  audio.play().catch(() => {
+    // Most browsers block unmuted autoplay before any user interaction.
+    // As soon as the visitor taps/clicks anywhere on the page, start it —
+    // still fully automatic from their point of view, no button needed.
+    const startOnInteract = () => {
+      audio.play().catch(() => {});
+      document.removeEventListener("click", startOnInteract);
+      document.removeEventListener("touchstart", startOnInteract);
+      document.removeEventListener("keydown", startOnInteract);
+    };
+    document.addEventListener("click", startOnInteract, { once: true });
+    document.addEventListener("touchstart", startOnInteract, { once: true });
+    document.addEventListener("keydown", startOnInteract, { once: true });
   });
-}
-
-if (musicButton) {
-  musicButton.onclick = () => {
-    if (!playing) {
-      audio.play().catch(() => showToast("Тоглуулж чадсангүй 🙁"));
-      musicButton.innerHTML = "⏸ Зогсоох";
-      visualizer?.classList.add("playing");
-      playing = true;
-    } else {
-      audio.pause();
-      musicButton.innerHTML = "▶ Тоглуулах";
-      visualizer?.classList.remove("playing");
-      playing = false;
-    }
-  };
 }
 
 // ==========================
@@ -131,26 +99,26 @@ document.querySelectorAll(".copy-btn").forEach((btn) => {
     const value = btn.dataset.copy;
     try {
       await navigator.clipboard.writeText(value);
-      showToast("Хууллаа ✅");
+      showToast("Copied ✅");
     } catch {
-      showToast("Хуулж чадсангүй");
+      showToast("Couldn't copy");
     }
   });
 });
 
 // ==========================
-// FIREBASE VIEW COUNTER (session-д 1 удаа нэмэгдэнэ)
+// FIREBASE VIEW COUNTER (increments once per session)
 // ==========================
 
 const viewRef = doc(db, "website", "views");
 const viewElement = document.getElementById("views");
 
-// Firestore-оос realtime тоог харуулна (яг тухайн үед бусад хэрэглэгч нэмэгдвэл шууд шинэчлэгдэнэ)
+// Realtime listener: view count updates live for everyone looking at the page
 onSnapshot(viewRef, (snap) => {
   if (viewElement && snap.exists()) {
     viewElement.textContent = snap.data().count ?? 0;
   }
-}, (err) => console.log("Firebase view listen error:", err));
+}, (err) => console.error("🔥 Firestore view listener blocked:", err.code, err.message));
 
 async function addView() {
   const alreadyCounted = sessionStorage.getItem("shyro_viewed");
@@ -165,14 +133,17 @@ async function addView() {
     }
     sessionStorage.setItem("shyro_viewed", "1");
   } catch (error) {
-    console.log("Firebase View Error:", error);
+    // Count staying at 0 despite visits is almost always a Firestore
+    // Security Rules issue (writes denied for unauthenticated clients).
+    // Check the browser console for "permission-denied" here.
+    console.error("🔥 Firestore view write failed:", error.code, error.message);
   }
 }
 
 addView();
 
 // ==========================
-// DISCORD PRESENCE (Lanyard API) — амжилтгүй бол зүгээр далдална
+// DISCORD PRESENCE (Lanyard API) — falls back quietly on failure
 // ==========================
 
 async function loadDiscordStatus() {
@@ -190,19 +161,19 @@ async function loadDiscordStatus() {
     dot.dataset.state = status;
 
     const labels = {
-      online: "🟢 Онлайн",
-      idle: "🌙 Идэвхгүй",
-      dnd: "⛔ Бүү саад",
-      offline: "⚫ Офлайн"
+      online: "🟢 Online",
+      idle: "🌙 Idle",
+      dnd: "⛔ Do Not Disturb",
+      offline: "⚫ Offline"
     };
-    text.textContent = labels[status] || "Тодорхойгүй";
+    text.textContent = labels[status] || "Unknown";
 
     const activity = json.data.activities?.find(a => a.type === 0);
     if (activity) {
       text.textContent += ` — ${activity.name}`;
     }
   } catch (error) {
-    // Алдаа гарвал энгийн default төлөвт орно, сайт эвдрэхгүй
+    // On failure, just fall back to a neutral state — the site never breaks
     dot.dataset.state = "unknown";
     text.textContent = "";
     console.log("Discord presence unavailable:", error);
@@ -254,7 +225,7 @@ if (isMobile && !prefersReducedMotion && card) {
 }
 
 // ==========================
-// PWA — SERVICE WORKER БҮРТГЭЛ (offline ажиллах боломж)
+// PWA — SERVICE WORKER REGISTRATION (enables offline mode)
 // ==========================
 
 if ("serviceWorker" in navigator) {
@@ -265,7 +236,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-// "Install app" боломжтой үед жижиг товч харуулъя (browser дэмждэг л бол)
+// Show the "Install App" button only when the browser supports it
 let deferredInstallPrompt = null;
 const installBtn = document.getElementById("installBtn");
 
@@ -286,16 +257,21 @@ if (installBtn) {
 }
 
 window.addEventListener("appinstalled", () => {
-  showToast("Амжилттай суулгалаа! 📲");
+  showToast("Installed! 📲");
 });
 
 // ==========================
-// LOADER REMOVE
+// LOADER REMOVE + AUTOPLAY START
 // ==========================
 
 window.addEventListener("load", () => {
   const loader = document.querySelector(".loader");
   if (loader) {
-    setTimeout(() => loader.remove(), 1000);
+    setTimeout(() => {
+      loader.remove();
+      tryAutoplay();
+    }, 1000);
+  } else {
+    tryAutoplay();
   }
 });

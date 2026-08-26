@@ -36,8 +36,8 @@ body{
 
 
 /* ==========================
-   BACKGROUND — цэвэр CSS mesh gradient (гадаад зураг татахгүй тул
-   хурдан ачаалагдаж, найдвартай ажиллана)
+   BACKGROUND — pure CSS mesh gradient (no external image, loads
+   instantly and never breaks)
 ========================== */
 
 .background{
@@ -71,11 +71,90 @@ body{
 }
 
 
+/* Twinkling particle field — two layered dot sets for a subtle parallax feel */
+
+.particles,
+.particles::after{
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.particles{
+  z-index: -1;
+  pointer-events: none;
+  box-shadow: 33.1vw 16.5vh 0 rgba(255,255,255,0.64), 9.0vw 53.4vh 0 rgba(255,255,255,0.47), 7.6vw 50.7vh 0 rgba(255,255,255,0.27), 43.6vw 8.7vh 0 rgba(255,255,255,0.3), 42.8vw 81.4vh 0 rgba(255,255,255,0.32), 23.4vw 62.2vh 0 rgba(255,255,255,0.82), 57.4vw 40.1vh 0 rgba(255,255,255,0.84), 6.5vw 84.4vh 0 rgba(255,255,255,0.42), 15.8vw 13.3vh 0 rgba(255,255,255,0.44), 80.3vw 19.3vh 0 rgba(255,255,255,0.6), 63.3vw 37.8vh 0 rgba(255,255,255,0.58), 8.0vw 7.7vh 0 rgba(255,255,255,0.37), 67.3vw 43.0vh 0 rgba(255,255,255,0.44), 58.2vw 45.5vh 0 rgba(255,255,255,0.43), 78.3vw 69.1vh 0 rgba(255,255,255,0.4), 57.1vw 52.4vh 0 rgba(255,255,255,0.78), 72.0vw 29.6vh 0 rgba(255,255,255,0.84), 13.3vw 42.1vh 0 rgba(255,255,255,0.7), 16.6vw 48.9vh 0 rgba(255,255,255,0.27), 66.1vw 75.4vh 0 rgba(255,255,255,0.59), 86.0vw 32.1vh 0 rgba(255,255,255,0.67), 59.1vw 57.7vh 0 rgba(255,255,255,0.52), 82.6vw 92.7vh 0 rgba(255,255,255,0.53), 65.8vw 7.8vh 0 rgba(255,255,255,0.67), 64.1vw 97.3vh 0 rgba(255,255,255,0.74), 29.3vw 39.0vh 0 rgba(255,255,255,0.65), 4.2vw 46.3vh 0 rgba(255,255,255,0.35), 13.2vw 7.7vh 0 rgba(255,255,255,0.71), 14.4vw 25.8vh 0 rgba(255,255,255,0.48), 85.7vw 9.7vh 0 rgba(255,255,255,0.52), 54.7vw 86.8vh 0 rgba(255,255,255,0.74), 84.9vw 28.7vh 0 rgba(255,255,255,0.5), 36.4vw 86.9vh 0 rgba(255,255,255,0.82), 16.5vw 18.9vh 0 rgba(255,255,255,0.39), 24.4vw 48.6vh 0 rgba(255,255,255,0.6), 27.2vw 2.4vh 0 rgba(255,255,255,0.5), 37.4vw 56.4vh 0 rgba(255,255,255,0.82), 68.3vw 51.5vh 0 rgba(255,255,255,0.62), 66.9vw 7.2vh 0 rgba(255,255,255,0.79), 76.9vw 86.0vh 0 rgba(255,255,255,0.73), 39.7vw 40.3vh 0 rgba(255,255,255,0.31), 62.9vw 8.0vh 0 rgba(255,255,255,0.29), 22.0vw 17.6vh 0 rgba(255,255,255,0.45), 7.0vw 2.0vh 0 rgba(255,255,255,0.34), 11.7vw 36.9vh 0 rgba(255,255,255,0.27);
+  animation: twinkleA 5s ease-in-out infinite alternate;
+}
+
+.particles::after{
+  box-shadow: 63.4vw 4.4vh 0 rgba(0,217,255,0.31), 23.4vw 72.7vh 0 rgba(0,217,255,0.47), 87.6vw 10.3vh 0 rgba(0,217,255,0.37), 4.9vw 23.0vh 0 rgba(0,217,255,0.4), 4.5vw 21.1vh 0 rgba(0,217,255,0.46), 54.3vw 23.2vh 0 rgba(0,217,255,0.44), 79.7vw 2.6vh 0 rgba(0,217,255,0.52), 69.0vw 34.7vh 0 rgba(0,217,255,0.26), 93.9vw 34.3vh 0 rgba(0,217,255,0.24), 11.3vw 83.4vh 0 rgba(0,217,255,0.44), 79.5vw 72.1vh 0 rgba(0,217,255,0.41), 95.4vw 38.3vh 0 rgba(0,217,255,0.42), 81.6vw 61.4vh 0 rgba(0,217,255,0.54), 57.4vw 69.6vh 0 rgba(0,217,255,0.22), 23.9vw 29.8vh 0 rgba(0,217,255,0.23), 24.3vw 11.7vh 0 rgba(0,217,255,0.31), 63.0vw 37.0vh 0 rgba(0,217,255,0.35), 22.1vw 27.6vh 0 rgba(0,217,255,0.57), 64.2vw 60.5vh 0 rgba(0,217,255,0.27), 72.0vw 17.7vh 0 rgba(0,217,255,0.35), 97.0vw 63.4vh 0 rgba(0,217,255,0.42), 67.7vw 82.9vh 0 rgba(0,217,255,0.51), 24.0vw 5.1vh 0 rgba(0,217,255,0.33), 27.7vw 22.3vh 0 rgba(0,217,255,0.58), 86.1vw 32.2vh 0 rgba(0,217,255,0.46), 40.0vw 89.8vh 0 rgba(0,217,255,0.38), 27.4vw 25.7vh 0 rgba(0,217,255,0.42), 27.2vw 58.1vh 0 rgba(0,217,255,0.56), 40.3vw 23.1vh 0 rgba(0,217,255,0.6), 50.9vw 10.7vh 0 rgba(0,217,255,0.22), 12.5vw 62.2vh 0 rgba(0,217,255,0.52), 42.5vw 8.1vh 0 rgba(0,217,255,0.35), 97.6vw 52.8vh 0 rgba(0,217,255,0.59), 84.6vw 3.1vh 0 rgba(0,217,255,0.49), 67.4vw 53.5vh 0 rgba(0,217,255,0.31);
+  animation: twinkleB 4s ease-in-out infinite alternate;
+  animation-delay: .8s;
+}
+
+@keyframes twinkleA{
+  0%{ opacity: .35; }
+  100%{ opacity: 1; }
+}
+
+@keyframes twinkleB{
+  0%{ opacity: .2; }
+  100%{ opacity: .8; }
+}
+
+
+/* Large hand-drawn "Shyro" signature sitting behind the card content as a
+   soft watermark. Scales to fit the card via the SVG viewBox. */
+
+.card-signature{
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.signature-text{
+  font-family: "Dancing Script", cursive;
+  font-size: 92px;
+  fill: none;
+  stroke: url(#sigGradient);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 1600;
+  stroke-dashoffset: 1600;
+  opacity: 0;
+  transform: rotate(-6deg);
+  transform-origin: 300px 130px;
+  animation:
+    signDraw 3.5s cubic-bezier(.65,0,.35,1) .5s forwards,
+    signGlow 5s ease-in-out 4.2s infinite alternate;
+}
+
+@keyframes signDraw{
+  0%{ opacity: .8; stroke-dashoffset: 1600; }
+  100%{ opacity: .8; stroke-dashoffset: 0; }
+}
+
+@keyframes signGlow{
+  0%{ opacity: .16; }
+  100%{ opacity: .34; }
+}
+
+
 /* ==========================
    CARD
 ========================== */
 
 .card{
+  position: relative;
   width: var(--card-w);
   padding: clamp(24px, 5vw, 38px);
   text-align: center;
@@ -99,24 +178,29 @@ body{
   50%{ translate: 0 -10px; }
 }
 
-/* Card доторх элементүүд дараалан гарч ирнэ (stagger fade-in) */
+/* Card children fade in one after another (stagger) */
 
 .card > *{
   animation: fadeInUp .6s ease both;
 }
 
-.card > *:nth-child(1){ animation-delay: .05s; }
-.card > *:nth-child(2){ animation-delay: .10s; }
-.card > *:nth-child(3){ animation-delay: .15s; }
-.card > *:nth-child(4){ animation-delay: .20s; }
-.card > *:nth-child(5){ animation-delay: .25s; }
-.card > *:nth-child(6){ animation-delay: .30s; }
-.card > *:nth-child(7){ animation-delay: .35s; }
-.card > *:nth-child(8){ animation-delay: .40s; }
-.card > *:nth-child(9){ animation-delay: .45s; }
-.card > *:nth-child(10){ animation-delay: .50s; }
-.card > *:nth-child(11){ animation-delay: .55s; }
-.card > *:nth-child(12){ animation-delay: .60s; }
+.card > .card-signature{
+  animation: none;
+  opacity: 1;
+}
+
+.card > *:nth-child(2){ animation-delay: .05s; }
+.card > *:nth-child(3){ animation-delay: .10s; }
+.card > *:nth-child(4){ animation-delay: .15s; }
+.card > *:nth-child(5){ animation-delay: .20s; }
+.card > *:nth-child(6){ animation-delay: .25s; }
+.card > *:nth-child(7){ animation-delay: .30s; }
+.card > *:nth-child(8){ animation-delay: .35s; }
+.card > *:nth-child(9){ animation-delay: .40s; }
+.card > *:nth-child(10){ animation-delay: .45s; }
+.card > *:nth-child(11){ animation-delay: .50s; }
+.card > *:nth-child(12){ animation-delay: .55s; }
+.card > *:nth-child(13){ animation-delay: .60s; }
 
 @keyframes fadeInUp{
   from{ opacity: 0; transform: translateY(14px); }
@@ -269,7 +353,7 @@ h1{
 
 
 /* ==========================
-   SOCIAL BUTTONS — квадрат tile хэлбэрийн grid
+   SOCIAL BUTTONS — square tile grid
 ========================== */
 
 .buttons{
@@ -359,80 +443,48 @@ h1{
 
 
 /* ==========================
-   MUSIC
+   MUSIC — autoplay only, no manual controls; just a live equalizer
 ========================== */
 
 .music-box{
   margin-top: 22px;
-  padding: clamp(14px, 4vw, 20px);
+  padding: clamp(18px, 5vw, 26px);
   border-radius: var(--radius-md);
   background: rgba(255,255,255,.1);
   border: 1px solid var(--glass-border);
-}
-
-.music-box p{
-  font-size: 12px;
-  color: #ccc;
-}
-
-.music-box h3{
-  margin: 8px 0;
-  font-size: clamp(13px, 3.4vw, 15px);
 }
 
 .visualizer{
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 4px;
-  height: 24px;
-  margin: 10px 0;
+  gap: 5px;
+  height: 40px;
 }
 
 .visualizer span{
-  width: 4px;
-  height: 6px;
-  border-radius: 2px;
+  width: 5px;
+  height: 8px;
+  border-radius: 3px;
   background: linear-gradient(180deg, #00eaff, #7b00ff);
+  box-shadow: 0 0 8px rgba(0,217,255,.5);
 }
 
 .visualizer.playing span{
-  animation: bounce .9s ease-in-out infinite;
+  animation: bounce 1s ease-in-out infinite;
 }
 
 .visualizer.playing span:nth-child(1){ animation-delay: 0s; }
-.visualizer.playing span:nth-child(2){ animation-delay: .15s; }
-.visualizer.playing span:nth-child(3){ animation-delay: .3s; }
-.visualizer.playing span:nth-child(4){ animation-delay: .1s; }
-.visualizer.playing span:nth-child(5){ animation-delay: .25s; }
+.visualizer.playing span:nth-child(2){ animation-delay: .1s; }
+.visualizer.playing span:nth-child(3){ animation-delay: .2s; }
+.visualizer.playing span:nth-child(4){ animation-delay: .3s; }
+.visualizer.playing span:nth-child(5){ animation-delay: .2s; }
+.visualizer.playing span:nth-child(6){ animation-delay: .1s; }
+.visualizer.playing span:nth-child(7){ animation-delay: 0s; }
 
 @keyframes bounce{
-  0%, 100%{ height: 6px; }
-  50%{ height: 22px; }
-}
-
-.progress-bar{
-  width: 100%;
-  height: 5px;
-  border-radius: 5px;
-  background: rgba(255,255,255,.15);
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.progress-fill{
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #00eaff, #9d00ff);
-  transition: width .1s linear;
-}
-
-.time-row{
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: #999;
-  margin-top: 6px;
+  0%, 100%{ height: 8px; }
+  50%{ height: 38px; }
 }
 
 button{
@@ -521,7 +573,7 @@ button:active,
 
 
 /* ==========================
-   CUSTOM CURSOR (зөвхөн desktop, hover-той төхөөрөмж дээр)
+   CUSTOM CURSOR (desktop / hover-capable devices only)
 ========================== */
 
 @media (hover: hover) and (pointer: fine){
@@ -622,7 +674,7 @@ button:active,
 
 
 /* ==========================
-   RESPONSIVE — жижиг дэлгэц
+   RESPONSIVE
 ========================== */
 
 @media (max-width: 420px){
@@ -640,8 +692,6 @@ button:active,
   }
 }
 
-/* Нам өндөртэй viewport (нээлттэй keyboard, landscape утас) дээр card-ыг
-   дээд талд байрлуулж, шаардлагатай бол хуудас өөрөө scroll хийнэ */
 @media (max-height: 720px){
   body{
     align-items: flex-start;
