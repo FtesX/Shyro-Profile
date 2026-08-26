@@ -121,6 +121,16 @@ body{
   pointer-events: none;
 }
 
+.card-signature{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 36px;
+  height: 170px;
+  z-index: -1;
+  pointer-events: none;
+}
+
 .signature-text{
   font-family: "Dancing Script", cursive;
   font-size: 92px;
@@ -131,41 +141,22 @@ body{
   stroke-dasharray: 1600;
   stroke-dashoffset: 1600;
   opacity: 0;
+  filter: blur(.6px);
   transform: rotate(-6deg);
-  transform-origin: 300px 130px;
+  transform-origin: 300px 165px;
   animation:
     signDraw 3.5s cubic-bezier(.65,0,.35,1) .5s forwards,
     signGlow 5s ease-in-out 4.2s infinite alternate;
 }
 
 @keyframes signDraw{
-  0%{ opacity: .8; stroke-dashoffset: 1600; }
-  100%{ opacity: .8; stroke-dashoffset: 0; }
+  0%{ opacity: .5; stroke-dashoffset: 1600; }
+  100%{ opacity: .5; stroke-dashoffset: 0; }
 }
 
 @keyframes signGlow{
-  0%{ opacity: .16; }
-  100%{ opacity: .34; }
-}
-
-
-/* ==========================
-   CARD
-========================== */
-
-.card{
-  position: relative;
-  width: var(--card-w);
-  padding: clamp(24px, 5vw, 38px);
-  text-align: center;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 0 30px rgba(0,170,255,.5);
-  animation: appear .8s ease, floatCard 5s ease-in-out infinite;
-  transform-style: preserve-3d;
-  transition: transform .15s;
+  0%{ opacity: .1; }
+  100%{ opacity: .2; }
 }
 
 @keyframes appear{
