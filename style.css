@@ -149,14 +149,25 @@ body{
     signGlow 5s ease-in-out 4.2s infinite alternate;
 }
 
-@keyframes signDraw{
-  0%{ opacity: .5; stroke-dashoffset: 1600; }
-  100%{ opacity: .5; stroke-dashoffset: 0; }
-}
+@media (min-width: 640px){
+  .card-signature{
+    height: 220px;
+  }
 
-@keyframes signGlow{
-  0%{ opacity: .1; }
-  100%{ opacity: .2; }
+  .signature-text{
+    font-size: 132px;
+    transform: translateX(55px) rotate(-6deg);
+  }
+
+  @keyframes signDraw{
+    0%{ opacity: .7; stroke-dashoffset: 1600; }
+    100%{ opacity: .7; stroke-dashoffset: 0; }
+  }
+
+  @keyframes signGlow{
+    0%{ opacity: .18; }
+    100%{ opacity: .38; }
+  }
 }
 
 @keyframes appear{
@@ -365,8 +376,9 @@ h1{
   border-radius: var(--radius-md);
   text-decoration: none;
   color: white;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.35);
+  box-shadow: 0 4px 14px rgba(0,0,0,.28);
   transition: transform .2s, background .2s, box-shadow .2s;
 }
 

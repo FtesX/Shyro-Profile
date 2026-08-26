@@ -74,20 +74,28 @@ audio.addEventListener("play", () => visualizer?.classList.add("playing"));
 audio.addEventListener("pause", () => visualizer?.classList.remove("playing"));
 
 function tryAutoplay() {
-  audio.play().catch(() => {
-    // Most browsers block unmuted autoplay before any user interaction.
-    // As soon as the visitor taps/clicks anywhere on the page, start it —
-    // still fully automatic from their point of view, no button needed.
-    const startOnInteract = () => {
-      audio.play().catch(() => {});
-      document.removeEventListener("click", startOnInteract);
-      document.removeEventListener("touchstart", startOnInteract);
-      document.removeEventListener("keydown", startOnInteract);
-    };
-    document.addEventListener("click", startOnInteract, { once: true });
-    document.addEventListener("touchstart", startOnInteract, { once: true });
-    document.addEventListener("keydown", startOnInteract, { once: true });
-  });
+  // Browsers always allow *muted* autoplay, so start it immediately —
+  // the equalizer animates the instant the site opens, no click needed.
+  // The moment the visitor does anything at all (click/tap/key) anywhere
+  // on the page, sound unmutes automatically. There's no way to get true
+  // audible autoplay with zero interaction — that's a hard browser/OS
+  // policy, not something any site's code can bypass — this is the
+  // closest practical equivalent.
+  audio.muted = true;
+  audio.play().catch(() => {});
+
+  const unmute = () => {
+    audio.muted = false;
+    if (audio.paused) audio.play().catch(() => {});
+    document.removeEventListener("click", unmute);
+    document.removeEventListener("touchstart", unmute);
+    document.removeEventListener("keydown", unmute);
+    document.removeEventListener("pointerdown", unmute);
+  };
+  document.addEventListener("click", unmute, { once: true });
+  document.addEventListener("touchstart", unmute, { once: true });
+  document.addEventListener("keydown", unmute, { once: true });
+  document.addEventListener("pointerdown", unmute, { once: true });
 }
 
 // ==========================
